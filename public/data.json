@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Blanket Drive for Northern Villages",
+    "image": "/assets/campaigns/blanket-drive.jpg",
+    "description": "Distributing warm blankets to families in remote areas of Rangpur.",
+    "status": "Ongoing",
+    "contactInfo": "rahim@donate.org | +880123456789",
+    "division": "Rangpur"
+  },
+  {
+    "id": 2,
+    "title": "Rangpur School Winter Aid",
+    "image": "/assets/campaigns/rangpur-school.jpg",
+    "description": "Providing jackets and mufflers to children in government primary schools.",
+    "status": "Ongoing",
+    "contactInfo": "school@rangpur.org | +8801122334455",
+    "division": "Rangpur"
+  },
+  {
+    "id": 3,
+    "title": "Dhaka Slum Sweater Campaign",
+    "image": "/assets/campaigns/sweater-dhaka.jpg",
+    "description": "Helping children and elders in Dhaka’s slum areas with warm sweaters.",
+    "status": "Ongoing",
+    "contactInfo": "shila@donate.org | +880198765432",
+    "division": "Dhaka"
+  },
+  {
+    "id": 4,
+    "title": "Dhanmondi Street Shelter Aid",
+    "image": "/assets/campaigns/dhanmondi-aid.jpg",
+    "description": "Distributing winter packs to the homeless near Dhanmondi Lake and surrounding areas.",
+    "status": "Upcoming",
+    "contactInfo": "aid@dhakahelp.org | +8801777888999",
+    "division": "Dhaka"
+  },
+  {
+    "id": 5,
+    "title": "Chittagong Coastal Cold Relief",
+    "image": "/assets/campaigns/coastal-help.jpg",
+    "description": "Wool shawls and warm socks for families in the cyclone-affected coastal belt.",
+    "status": "Ongoing",
+    "contactInfo": "support@chittagongaid.org | +8801912345678",
+    "division": "Chittagong"
+  },
+  {
+    "id": 6,
+    "title": "Hilly Area Blanket Drive",
+    "image": "/assets/campaigns/hilly-aid.jpg",
+    "description": "Delivering blankets to indigenous communities in Chittagong Hill Tracts.",
+    "status": "Completed",
+    "contactInfo": "hill@relief.org | +8801345678910",
+    "division": "Chittagong"
+  }
+]

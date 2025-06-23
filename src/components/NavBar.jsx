@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,9 +50,12 @@ const NavBar = () => {
         <button className="p-2 rounded-full border border-gray-600 hover:bg-gray-700">
           <FaSearch className="text-gray-400" />
         </button>
-        <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md">
-          Donate Now
-        </button>
+        <Link
+          to="/login"
+          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md"
+        >
+          Log In
+        </Link>
       </div>
 
       {/* Mobile Menu Button (if you decide to add a mobile menu) */}
