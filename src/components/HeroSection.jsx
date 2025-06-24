@@ -30,7 +30,7 @@ const HeroSection = () => {
         */}
 
         <Link
-          to={"/"}
+          to={"/campaigns"}
           className="inline-block bg-yellow-500 hover:bg-yellow-600 text-[#13221b] font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
         >
           Donate

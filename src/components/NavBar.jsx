@@ -50,12 +50,20 @@ const NavBar = () => {
       {/* Search Icon and Donate Button */}
       <div className="flex items-center space-x-4">
         {user ? (
-          <button
-            onClick={logOut}
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md"
-          >
-            Sign Out
-          </button>
+          <>
+            <img
+              src={user?.photoURL}
+              alt="User Avatar"
+              className="w-10 h-10 rounded-full object-cover border"
+            />
+
+            <button
+              onClick={logOut}
+              className="bg-yellow-500 btn btn-sm border-0 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md"
+            >
+              Sign Out
+            </button>
+          </>
         ) : (
           <Link
             to="/login"

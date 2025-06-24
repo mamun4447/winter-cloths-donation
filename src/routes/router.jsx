@@ -7,6 +7,8 @@ import LogIn from "../pages/LogIn";
 import Register from "../pages/Register";
 import PrivateRoute from "../components/PrivateRoute";
 import ErrorPage from "../pages/ErrorPage";
+import Dashboard from "../pages/Dashboard";
+import HowToHelp from "../pages/HowToHelp";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,18 @@ const router = createBrowserRouter([
             <DonationDetails />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/how-to-help",
+        element: <HowToHelp />,
       },
       {
         path: "/login",
