@@ -6,11 +6,12 @@ import toast from "react-hot-toast";
 // import your Firebase registration methods here
 
 const Register = () => {
-  const [error, setError] = useState("");
-  const { createUser, userDetailSet, googleLogIn } = useContext(AuthContext);
+  const { createUser, userDetailSet, googleLogIn, error, setError } =
+    useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
 
   //===> Google Login <===//
   const handleGoogleLogin = () => {
@@ -27,6 +28,18 @@ const Register = () => {
       });
   };
 
+  //===Password Validation===//
+  const handleOnChange = (e) => {
+    const password = e.target.value;
+    // console.log(e.target.value);
+    setError("");
+    if (!regex.test(password)) {
+      return setError(
+        "Password should have at least one upper case, one lower case, one number and one special charecter."
+      );
+    }
+  };
+
   //===>Handle Create User<===/
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -36,6 +49,13 @@ const Register = () => {
     const email = form.get("email");
     const photo = form.get("photo");
     const password = form.get("password");
+
+    // if (!regex.test(password)) {
+    //   setError(
+    //     "Password should have at least one upper case, one lower case, one number and one special charecter."
+    //   );
+    //   return;
+    // }
 
     //==Create user==//
     createUser(email, password)
@@ -102,14 +122,18 @@ const Register = () => {
               required
             />
             <input
+              onChange={handleOnChange}
               type="password"
               name="password"
               placeholder="Password"
               className="input input-bordered w-full"
               required
             />
-
-            <button className="btn  bg-[#13221b] text-white hover:bg-green-900 w-full">
+            {error ? <p className="text-red-600">{error}</p> : ""}
+            <button
+              disabled={error}
+              className="btn  bg-[#13221b] text-white hover:bg-green-900 w-full"
+            >
               Register
             </button>
           </form>

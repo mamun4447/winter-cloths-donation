@@ -15,6 +15,7 @@ const provider = new GoogleAuthProvider();
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [error, setError] = useState("");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -65,6 +66,8 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
+    error,
+    setError,
     googleLogIn,
     createUser,
     userDetailSet,

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
@@ -50,9 +49,6 @@ const NavBar = () => {
 
       {/* Search Icon and Donate Button */}
       <div className="flex items-center space-x-4">
-        <button className="p-2 rounded-full border border-gray-600 hover:bg-gray-700">
-          <FaSearch className="text-gray-400" />
-        </button>
         {user ? (
           <button
             onClick={logOut}
@@ -104,28 +100,19 @@ const NavBar = () => {
 
       {/* Mobile Menu (if you decide to add a mobile menu) */}
       {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#1a1a1a] p-4 z-10">
-          <a href="#" className="block py-2 hover:bg-gray-700">
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#13221b] p-4 z-10">
+          <NavLink to="/" className="block py-2 hover:bg-gray-700">
             Home
-          </a>
-          <a href="#" className="block py-2 hover:bg-gray-700">
-            About
-          </a>
-          <a href="#" className="block py-2 hover:bg-gray-700">
-            Causes
-          </a>
-          <a href="#" className="block py-2 hover:bg-gray-700">
-            Event
-          </a>
-          <a href="#" className="block py-2 hover:bg-gray-700">
-            Blog
-          </a>
-          <a href="#" className="block py-2 hover:bg-gray-700">
-            Page's
-          </a>
-          <a href="#" className="block py-2 hover:bg-gray-700">
-            Contact
-          </a>
+          </NavLink>
+          <NavLink to="campaigns" className="block py-2 hover:bg-gray-700">
+            Donation Campaigns
+          </NavLink>
+          <NavLink to="how-to-help" className="block py-2 hover:bg-gray-700">
+            How to Help
+          </NavLink>
+          <NavLink to="dashboard" className="block py-2 hover:bg-gray-700">
+            Dashboard
+          </NavLink>
         </div>
       )}
     </nav>

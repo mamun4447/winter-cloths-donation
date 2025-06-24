@@ -8,7 +8,7 @@ const About = () => {
       className="relative mb-4 mx-auto bg-cover bg-center bg-no-repeat py-20 px-10 text-white"
       style={{ backgroundImage: `url('${image}')` }}
     >
-      <div className="grid grid-cols-4 mx-auto items-center justify-center gap-5 px-4 text-[#13221b]">
+      <div className="md:grid grid-cols-4 flex flex-col-reverse  mx-auto items-center justify-center gap-5 px-4 text-[#13221b]">
         <div className="col-span-2">
           <h2 className="text-4xl font-bold mb-4 ">About Winter Donation</h2>
           <p className="text-lg mb-2">

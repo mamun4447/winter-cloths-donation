@@ -3,7 +3,7 @@ import img from "../assets/pic1.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[500px] flex items-center justify-center text-white overflow-hidden">
+    <section className="relative z-0 h-[500px] flex items-center justify-center text-white overflow-hidden">
       {/* Background Image Container */}
       <div
         className="absolute inset-0 bg-cover bg-center"

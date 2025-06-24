@@ -5,6 +5,8 @@ import DonationCamp from "../pages/DonationCamp";
 import DonationDetails from "../pages/DonationDetails";
 import LogIn from "../pages/LogIn";
 import Register from "../pages/Register";
+import PrivateRoute from "../components/PrivateRoute";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/campaigns/:id",
-        element: <DonationDetails />,
+        element: (
+          <PrivateRoute>
+            <DonationDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -33,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

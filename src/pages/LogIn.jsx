@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -6,9 +6,7 @@ import toast from "react-hot-toast";
 // import your Firebase auth methods here
 
 const LogIn = () => {
-  const [error, setError] = useState("");
-
-  const { userLogin, googleLogIn } = useContext(AuthContext);
+  const { userLogin, googleLogIn, error, setError } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -73,7 +71,7 @@ const LogIn = () => {
               className="input input-bordered w-full"
               required
             />
-
+            {error ? <p className="text-red-600">{error}</p> : ""}
             <button className="btn bg-[#13221b] text-white hover:bg-green-900 w-full">
               Login
             </button>
@@ -93,7 +91,11 @@ const LogIn = () => {
           <div className="text-center mt-4">
             <p className="text-sm">
               Don’t have an account?{" "}
-              <Link to="/register" className="link hover:text-green-800">
+              <Link
+                state={location?.state}
+                to="/register"
+                className="link hover:text-green-800"
+              >
                 Register
               </Link>
             </p>
