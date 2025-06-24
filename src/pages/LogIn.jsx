@@ -1,46 +1,55 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import toast from "react-hot-toast";
 // import your Firebase auth methods here
 
 const LogIn = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  const { userLogin, googleLogIn } = useContext(AuthContext);
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  //===> Google Login <===//
+  const handleGoogleLogin = () => {
+    googleLogIn()
+      .then((response) => {
+        setError("");
+        toast.success("User successfully Logged In!");
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((err) => {
+        const errText = err.code.split("/");
+        setError(errText[1]);
+        toast.error(errText[1]);
+      });
   };
 
-  const handleLogin = async (e) => {
+  //===>Handle User Login with Email & Password<===//
+  const handleUserLogin = (e) => {
     e.preventDefault();
-    setError("");
 
-    try {
-      // Example: await signInWithEmail(form.email, form.password)
-      toast.success("Login successful!");
-      navigate(from, { replace: true });
-    } catch (err) {
-      setError(err.message);
-      toast.error("Login failed: " + err.message);
-    }
+    const form = new FormData(e.target);
+    const email = form.get("email");
+    const password = form.get("password");
+
+    userLogin(email, password)
+      .then((response) => {
+        setError("");
+        toast.success(
+          response?.user?.displayName,
+          "user successfully Logged In!"
+        );
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((err) => {
+        const errText = err.code.split("/");
+        setError(errText[1]);
+        toast.error(errText[1]);
+      });
   };
-
-  const handleGoogleLogin = async () => {
-    try {
-      // Example: await signInWithGoogle()
-      toast.success("Logged in with Google!");
-      navigate(from, { replace: true });
-    } catch (err) {
-      toast.error("Google login failed: " + err.message);
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-md shadow-xl bg-base-100">
@@ -49,15 +58,13 @@ const LogIn = () => {
             Login to Continue
           </h2>
 
-          <form onSubmit={handleLogin} className="space-y-3">
+          <form onSubmit={handleUserLogin} className="space-y-3">
             <input
               type="email"
               name="email"
               placeholder="Email"
               className="input input-bordered w-full"
               required
-              value={form.email}
-              onChange={handleChange}
             />
             <input
               type="password"
@@ -65,11 +72,7 @@ const LogIn = () => {
               placeholder="Password"
               className="input input-bordered w-full"
               required
-              value={form.password}
-              onChange={handleChange}
             />
-
-            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <button className="btn bg-[#13221b] text-white hover:bg-green-900 w-full">
               Login

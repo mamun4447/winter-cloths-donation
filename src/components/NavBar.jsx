@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
+  // console.log(user);
   return (
     <nav className="bg-[#13221b] p-4 text-white flex items-center justify-between">
       {/* Logo */}
@@ -50,12 +53,21 @@ const NavBar = () => {
         <button className="p-2 rounded-full border border-gray-600 hover:bg-gray-700">
           <FaSearch className="text-gray-400" />
         </button>
-        <Link
-          to="/login"
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md"
-        >
-          Log In
-        </Link>
+        {user ? (
+          <button
+            onClick={logOut}
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md"
+          >
+            Sign Out
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-6 rounded-md"
+          >
+            Log In
+          </Link>
+        )}
       </div>
 
       {/* Mobile Menu Button (if you decide to add a mobile menu) */}

@@ -1,64 +1,69 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import toast from "react-hot-toast";
 // import your Firebase registration methods here
 
 const Register = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    photo: "",
-    password: "",
-  });
   const [error, setError] = useState("");
+  const { createUser, userDetailSet, googleLogIn } = useContext(AuthContext);
 
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  //===> Google Login <===//
+  const handleGoogleLogin = () => {
+    googleLogIn()
+      .then((response) => {
+        setError("");
+        toast.success("User successfully Logged In!");
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((err) => {
+        const errText = err.code.split("/");
+        setError(errText[1]);
+        toast.error(errText[1]);
+      });
   };
 
-  const isPasswordValid = (password) => {
-    const hasUpper = /[A-Z]/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    const isLongEnough = password.length >= 6;
-    return hasUpper && hasLower && isLongEnough;
-  };
-
-  const handleRegister = async (e) => {
+  //===>Handle Create User<===/
+  const handleCreateUser = (e) => {
     e.preventDefault();
-    setError("");
 
-    if (!isPasswordValid(form.password)) {
-      return setError(
-        "Password must have an uppercase letter, a lowercase letter, and be at least 6 characters."
-      );
-    }
+    const form = new FormData(e.target);
+    const name = form.get("name");
+    const email = form.get("email");
+    const photo = form.get("photo");
+    const password = form.get("password");
 
-    try {
-      // Example:
-      // await registerWithEmail(form.name, form.email, form.photo, form.password);
-      toast.success("Registration successful!");
-      navigate("/");
-    } catch (err) {
-      setError(err.message);
-      toast.error("Registration failed: " + err.message);
-    }
+    //==Create user==//
+    createUser(email, password)
+      .then((response) => {
+        setError("");
+        //==User Details Set==//
+        toast.success(
+          response?.user?.displayName,
+          "User Successfully Created!"
+        );
+        userDetailSet({ displayName: name, photoURL: photo })
+          .then((res) => {
+            // console.log(res);
+            navigate(location?.state ? location?.state : "/");
+          })
+
+          .catch((er) => {
+            const erText = er?.code?.split("/");
+            setError(erText[1]);
+            toast.error(erText[1]);
+          });
+      })
+      .catch((err) => {
+        const errText = err?.code?.split("/");
+        setError(errText[1]);
+        toast.error(errText[1]);
+      });
   };
-
-  const handleGoogleRegister = async () => {
-    try {
-      // Example:
-      // await signInWithGoogle();
-      toast.success("Logged in with Google!");
-      navigate("/");
-    } catch (err) {
-      toast.error("Google login failed: " + err.message);
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 text-[#13221b]">
       <div className="card w-full max-w-md shadow-xl bg-base-100">
@@ -74,15 +79,13 @@ const Register = () => {
             Create Your Account
           </h2>
 
-          <form onSubmit={handleRegister} className="space-y-3">
+          <form onSubmit={handleCreateUser} className="space-y-3">
             <input
               type="text"
               name="name"
               placeholder="Full Name"
               className="input input-bordered w-full"
               required
-              value={form.name}
-              onChange={handleChange}
             />
             <input
               type="email"
@@ -90,8 +93,6 @@ const Register = () => {
               placeholder="Email"
               className="input input-bordered w-full"
               required
-              value={form.email}
-              onChange={handleChange}
             />
             <input
               type="text"
@@ -99,8 +100,6 @@ const Register = () => {
               placeholder="Photo URL"
               className="input input-bordered w-full"
               required
-              value={form.photo}
-              onChange={handleChange}
             />
             <input
               type="password"
@@ -108,11 +107,7 @@ const Register = () => {
               placeholder="Password"
               className="input input-bordered w-full"
               required
-              value={form.password}
-              onChange={handleChange}
             />
-
-            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <button className="btn  bg-[#13221b] text-white hover:bg-green-900 w-full">
               Register
@@ -121,7 +116,7 @@ const Register = () => {
 
           <div className="text-center mt-3">
             <button
-              onClick={handleGoogleRegister}
+              onClick={handleGoogleLogin}
               className="btn btn-outline btn-sm w-full"
             >
               <FaGoogle />
